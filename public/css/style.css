@@ -115,3 +115,12 @@ body {
   padding-right: 0;
   padding-left: 0;
 }
+
+#web-title {
+  color: #fe424d !important;
+  font-size: 1.7rem;
+  margin-left: -0.5rem !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  font-family: "Kaushan Script", cursive;
+}
