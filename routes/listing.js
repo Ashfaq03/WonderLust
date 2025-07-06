@@ -3,7 +3,7 @@ const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../models/listing.js"); // Import the Listing model
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
-const listingController = require("../controllers/listing.js");
+const listingController = require("../controllers/listings.js");
 
 //get route
 router.get("/", wrapAsync(listingController.index));

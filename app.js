@@ -43,6 +43,11 @@ app.set("view engine", "ejs"); // Set EJS as the view engine
 app.set("views", path.join(__dirname, "views")); // Set the directory for EJS views
 app.engine("ejs", ejsMate); // Use ejs-mate for EJS layouts and partials
 
+
+/*
+  Session and authentication configuration.
+  This section sets up session management, flash messaging, and Passport.js authentication.
+*/
 const sessionOptions = {
   secret: "mysupersecret", // Secret key for signing the session ID cookie
   resave: false, // Do not save session if unmodified
@@ -68,6 +73,11 @@ passport.use(new LocalStrategy(User.authenticate())); // Use local strategy for 
 passport.serializeUser(User.serializeUser()); // Serialize user instance to session
 passport.deserializeUser(User.deserializeUser()); // Deserialize user instance from session
 
+/*
+  Middleware to make flash messages and current user available in all views.
+  This should be placed after session, flash, and passport middlewares,
+  but before route handlers.
+*/
 app.use((req, res, next) => {
   res.locals.success = req.flash("success"); // Make success flash messages available in all views
   res.locals.error = req.flash("error"); // Make error flash messages available in all views
