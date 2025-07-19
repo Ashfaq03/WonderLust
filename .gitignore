@@ -1,0 +1,59 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+logs/
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build output
+dist/
+build/
+.cache/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Ignore uploaded files (optional, only track specific ones)
+uploads/
+*.psd
+*.ai
+*.xcf
+
+# Ignore all images except specific formats
+# (remove this section if you want to keep all images in repo)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.webp
+*.tiff
+*.tif
+*.heic
+*.heif
+*.svg
+*.avif
+
+# Uncomment if you use TypeScript
+# *.tsbuildinfo
+
+# VSCode settings (optional)
+.vscode/
