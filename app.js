@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -43,7 +46,6 @@ app.set("view engine", "ejs"); // Set EJS as the view engine
 app.set("views", path.join(__dirname, "views")); // Set the directory for EJS views
 app.engine("ejs", ejsMate); // Use ejs-mate for EJS layouts and partials
 
-
 /*
   Session and authentication configuration.
   This section sets up session management, flash messaging, and Passport.js authentication.
@@ -84,7 +86,6 @@ app.use((req, res, next) => {
   res.locals.currUser = req.user; // Make the current user available in all views
   next(); // Proceed to the
 });
-
 
 //demo user route
 // app.get("/demouser", async (req, res) => {
