@@ -31,9 +31,12 @@ module.exports.showListing = async (req, res) => {
 module.exports.createListing = async (req, res, next) => {
   // wrapAsync is a function that wraps around an async function and catches any errors that occur
   // let { title, description, price, location, country } = req.body;
-
+  let url = req.file.path;
+  let filename = req.file.filename;
+  // console.log(url, "..", filename);
   const newlisting = new Listing(req.body.listing);
   newlisting.owner = req.user._id;
+  newlisting.image = { url, filename };
   await newlisting.save();
   // console.log(newlisting);
   req.flash("success", "New Listing Created!");
