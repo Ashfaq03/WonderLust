@@ -31,29 +31,10 @@ build/
 .DS_Store
 Thumbs.db
 
-# Ignore uploaded files (optional, only track specific ones)
-uploads/
-*.psd
-*.ai
-*.xcf
 
-# Ignore all images except specific formats
-# (remove this section if you want to keep all images in repo)
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.webp
-*.tiff
-*.tif
-*.heic
-*.heif
-*.svg
-*.avif
 
-# Uncomment if you use TypeScript
-# *.tsbuildinfo
+
+
 
 # VSCode settings (optional)
 .vscode/

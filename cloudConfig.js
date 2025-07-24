@@ -20,6 +20,12 @@ const storage = new CloudinaryStorage({
       "heic",
       "heif",
       "svg",
+      "avif",
     ],
   },
 });
+
+module.exports = {
+  storage,
+  cloudinary,
+};
