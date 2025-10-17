@@ -18,7 +18,7 @@ const initDb = async () => {
     ...obj,
     owner: "6867ef8c402e8a3b1a088d18",
   }));
-  console.log(initData.data);
+  // console.log(initData.data);
   await Listing.insertMany(initData.data);
 
   console.log("Data initialized!");

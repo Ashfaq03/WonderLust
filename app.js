@@ -29,7 +29,7 @@ const reviewRoute = require("./routes/review.js");
 const userRoute = require("./routes/user.js");
 
 // MongoDB connection URL
-// const MONGO_URL = "mongodb://localhost:27017/wonderlust";
+// const MONGO_URL = "//localhost mongo url comes here";
 const DB_URL = process.env.ATLASDB_URL;
 
 main()
@@ -54,7 +54,7 @@ app.engine("ejs", ejsMate); // Use ejs-mate for EJS layouts and partials
 const store = MongoStore.create({
   mongoUrl: DB_URL,
   crypto: {
-    secret: "mysupersecret",
+    secret: process.env.SECRET,
   },
   touchAfter: 24 * 3600,
 });
@@ -63,7 +63,7 @@ store.on("error", () => console.log("ERROR in MONGO SESSIONS", err));
 
 const sessionOptions = {
   store,
-  secret: "mysupersecret", // Secret key for signing the session ID cookie
+  secret: process.env.SECRET, // Secret key for signing the session ID cookie
   resave: false, // Do not save session if unmodified
   saveUninitialized: true, // Save new sessions that are uninitialized
   cookie: {
