@@ -1,4 +1,10 @@
+/// --- next 6 storign coordinates
+// --- NOTE!!!! == mapbox token commented ---> in show.ejs
+
 const Listing = require("../models/listing");
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
@@ -29,6 +35,13 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
+  let response = await geocodingClient
+    .forwardGeocode({
+      query: req.body.listing.location,
+      limit: 1,
+    })
+    .send();
+
   // wrapAsync is a function that wraps around an async function and catches any errors that occur
   // let { title, description, price, location, country } = req.body;
   let url = req.file.path;
@@ -37,7 +50,9 @@ module.exports.createListing = async (req, res, next) => {
   const newlisting = new Listing(req.body.listing);
   newlisting.owner = req.user._id;
   newlisting.image = { url, filename };
-  await newlisting.save();
+  newlisting.geometry = response.body.features[0].geometry;
+  let savedListing = await newlisting.save();
+  console.log(savedListing);
   // console.log(newlisting);
   req.flash("success", "New Listing Created!");
   res.redirect(`/listings`);

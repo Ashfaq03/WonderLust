@@ -8,7 +8,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const mongoose = require("mongoose");
-
+const MongoStore = require("connect-mongo");
 // const Listing = require("./models/listing.js"); // Import the Listing model
 // const wrapAsync = require("./utils/wrapAsync.js");
 // const { listingSchema, reviewSchema } = require("./schema.js");
@@ -29,14 +29,15 @@ const reviewRoute = require("./routes/review.js");
 const userRoute = require("./routes/user.js");
 
 // MongoDB connection URL
-const MONGO_URL = "mongodb://localhost:27017/wonderlust";
+// const MONGO_URL = "mongodb://localhost:27017/wonderlust";
+const DB_URL = process.env.ATLASDB_URL;
 
 main()
   .then(() => console.log("MongoDB connected!")) // Log success message if MongoDB connects
   .catch((err) => console.log(err)); // Log error if MongoDB connection fails
 
 async function main() {
-  await mongoose.connect(MONGO_URL); // Connect to MongoDB using the provided URL
+  await mongoose.connect(DB_URL); // Connect to MongoDB using the provided URL
 }
 
 app.use(methodOverride("_method")); // Enable HTTP method override for forms (e.g., PUT, DELETE)
@@ -50,7 +51,18 @@ app.engine("ejs", ejsMate); // Use ejs-mate for EJS layouts and partials
   Session and authentication configuration.
   This section sets up session management, flash messaging, and Passport.js authentication.
 */
+const store = MongoStore.create({
+  mongoUrl: DB_URL,
+  crypto: {
+    secret: "mysupersecret",
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", () => console.log("ERROR in MONGO SESSIONS", err));
+
 const sessionOptions = {
+  store,
   secret: "mysupersecret", // Secret key for signing the session ID cookie
   resave: false, // Do not save session if unmodified
   saveUninitialized: true, // Save new sessions that are uninitialized
@@ -61,9 +73,9 @@ const sessionOptions = {
   },
 };
 
-app.get("/", (req, res) => {
-  res.send("root route..."); // Respond with a simple message for the root route
-});
+// app.get("/", (req, res) => {
+//   res.send("root route..."); // Respond with a simple message for the root route
+// });
 
 app.use(session(sessionOptions)); // Enable session management with the specified options
 app.use(flash()); // Enable flash messages for displaying alerts
